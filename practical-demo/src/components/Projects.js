@@ -1,9 +1,10 @@
 
 import React, { useEffect, useState } from 'react';
+import Tasks from './Tasks';
 
 const Projects = () => {
     const [projects, setProjects] = useState([]);
-    
+    const [currentProject, setCurrentProject] = useState(null);
     const [selectedProject, setSelectedProject] = useState('');
     
   
@@ -18,7 +19,9 @@ const Projects = () => {
       localStorage.setItem('projects', JSON.stringify(projects));
     }, [projects]);
   
-   
+    const selectProject1 = (project) => {
+        setCurrentProject(project);
+      };
   
     const handleProjectSubmit = (e) => {
       e.preventDefault();
@@ -44,12 +47,12 @@ const Projects = () => {
         </form>
         <ul>
           {projects.map((project, index) => (
-            <li key={index}>{project}</li>
+            <li key={index} onClick={() => selectProject1(project[index])}>{project}</li>
           ))}
         </ul>
   
       
-       
+        {currentProject && <Tasks project={currentProject} />}
       </div>
     );
   
